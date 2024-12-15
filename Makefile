@@ -14,14 +14,13 @@ OBJS = $(addprefix $(OBJ_DIR)/, $(FILES:.c=.o))
 NAME = libgc.a
 
 $(NAME): $(OBJS)
+	make -C $(LIBFT_DIR)
 	ar rcs $@ $^
 
-$(OBJ_DIR)/%.o: $(SRC_DIR)/%.c make_libft
+$(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
+	make -C $(LIBFT_DIR)
 	mkdir -p $(OBJ_DIR)
 	$(CC) $(CFLAGS) $(FT_FLAGS) $(INCLUDES) -c $< -o $@
-
-make_libft:
-	make -C $(LIBFT_DIR)
 
 clean:
 	rm -rf $(OBJ_DIR)

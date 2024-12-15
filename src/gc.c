@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   gc.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nidionis <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/04 16:20:59 by nidionis          #+#    #+#             */
-/*   Updated: 2024/12/14 16:44:12 by nidionis         ###   ########.fr       */
+/*   Updated: 2024/12/15 14:26:48 by nidionis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,24 +26,28 @@ void    clean_exit(t_list **gc_addr)
     }
 }
 
+void    *gc_append(t_list **gc_addr, void *ptr)
+{
+    t_list	*new_garbage;
+
+    new_garbage = ft_lstnew(ptr);
+    if (!new_garbage)
+        clean_exit(gc_addr);
+    ft_lstadd_back(gc_addr, new_garbage);
+    return (ptr);
+}
+
 void    *gc_calloc(t_list **gc_addr, size_t count, size_t size)
 {
     void    *ptr;
-    t_list  *new_garbage;
-    t_list  *gc;
 
-    gc = *gc_addr;
     if (size)
         if (size * count / size != count)
             return (NULL);
     ptr = malloc(count * size);
     if (ptr == NULL)
         return (NULL);
-    ft_bzero(ptr, count * size);
-    new_garbage = ft_lstnew(ptr);
-    if (!new_garbage)
-        clean_exit(gc_addr);
-    ft_lstadd_back(&gc, new_garbage);
+    gc_append(gc_addr, ptr);
     return (ptr);
 }
 
