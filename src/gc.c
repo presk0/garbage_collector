@@ -37,7 +37,7 @@ void    *gc_append(t_list **gc_addr, void *ptr)
     return (ptr);
 }
 
-void    *gc_calloc(t_list **gc_addr, size_t count, size_t size)
+void    *gc_malloc(t_list **gc_addr, size_t count, size_t size)
 {
     void    *ptr;
 
